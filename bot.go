@@ -2,35 +2,46 @@ package main
 
 import (
 	"context"
+	"flag-mashup/data"
+	"flag-mashup/handlers"
+	"log/slog"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"github.com/disgoorg/disgo"
 	"github.com/disgoorg/disgo/bot"
 	"github.com/disgoorg/disgo/cache"
 	"github.com/disgoorg/disgo/gateway"
-	"github.com/disgoorg/log"
-	"os"
-	"os/signal"
-	"syscall"
+	"github.com/lmittmann/tint"
 )
 
 func main() {
-	log.SetLevel(log.LevelInfo)
-	log.Info("starting the bot...")
-	log.Info("disgo version: ", disgo.Version)
+	codeData := &data.CodeData{}
+	codeData.Populate()
 
-	client, err := disgo.New(os.Getenv("BOT_TOKEN"),
+	logger := tint.NewHandler(os.Stdout, &tint.Options{
+		Level: slog.LevelInfo,
+	})
+	slog.SetDefault(slog.New(logger))
+
+	slog.Info("starting the bot...", slog.String("disgo.version", disgo.Version))
+
+	client, err := disgo.New(os.Getenv("FLAG_MASHUP_TOKEN"),
 		bot.WithGatewayConfigOpts(gateway.WithIntents(gateway.IntentsNone)),
-		bot.WithCacheConfigOpts(cache.WithCaches(cache.FlagsNone)))
+		bot.WithCacheConfigOpts(cache.WithCaches(cache.FlagsNone)),
+		bot.WithEventListeners(handlers.NewHandler(codeData)))
 	if err != nil {
-		log.Fatal("error while building disgo instance: ", err)
+		panic(err)
 	}
 
 	defer client.Close(context.TODO())
 
 	if err := client.OpenGateway(context.TODO()); err != nil {
-		log.Fatal("error while connecting to the gateway: ", err)
+		panic(err)
 	}
 
-	log.Info("bot is now running.")
+	slog.Info("flag mashup bot is now running.")
 	s := make(chan os.Signal, 1)
 	signal.Notify(s, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-s

@@ -1,10 +1,11 @@
-module bot-template
+module flag-mashup
 
-go 1.21
+go 1.22
 
 require (
 	github.com/disgoorg/disgo v0.17.1
-	github.com/disgoorg/log v1.2.1
+	github.com/lmittmann/tint v1.0.4
+	golang.org/x/exp v0.0.0-20240205201215-2c58cdc269a3
 )
 
 require (
