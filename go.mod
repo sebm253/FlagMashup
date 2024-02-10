@@ -5,7 +5,7 @@ go 1.22
 require (
 	github.com/disgoorg/disgo v0.17.2-0.20240209222542-7ddf0a02237f
 	github.com/lmittmann/tint v1.0.4
-	github.com/mlnrDev/mashup v0.0.0-20240210164726-01c5ab9f257c
+	github.com/mlnrDev/mashup v0.0.0-20240210180658-dbec93ed0186
 	golang.org/x/exp v0.0.0-20240205201215-2c58cdc269a3
 )
 
@@ -13,7 +13,6 @@ require (
 	github.com/disgoorg/json v1.1.0 // indirect
 	github.com/disgoorg/snowflake/v2 v2.0.1 // indirect
 	github.com/gorilla/websocket v1.5.1 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sasha-s/go-csync v0.0.0-20240107134140-fcbab37b09ad // indirect
 	golang.org/x/crypto v0.18.0 // indirect
 	golang.org/x/net v0.20.0 // indirect
