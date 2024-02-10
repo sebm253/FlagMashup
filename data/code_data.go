@@ -6,6 +6,7 @@ import (
 	"io"
 	"log/slog"
 	"net/http"
+	"strings"
 )
 
 const (
@@ -25,6 +26,14 @@ func (d *CodeData) Populate() {
 	defer rs.Body.Close()
 	if err := json.NewDecoder(rs.Body).Decode(&d.codes); err != nil {
 		panic(err)
+	}
+	// append country prefix to subdivisions, i.e. "California" -> "United States - California"
+	for code, name := range d.codes {
+		split := strings.Split(code, "-") // us-ca
+		if len(split) == 1 {              // no "-" separator
+			continue
+		}
+		d.codes[code] = fmt.Sprintf("%s - %s", d.codes[split[0]], name) // country - subdivision
 	}
 	slog.Debug("populated code data", slog.Int("data.length", len(d.codes)))
 }
