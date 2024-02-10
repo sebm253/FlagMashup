@@ -34,7 +34,11 @@ func (h *Handler) HandleMashup(event *handler.CommandEvent) error {
 			Build())
 	}
 
-	if err := event.DeferCreateMessage(true); err != nil {
+	hide, ok := data.OptBool("hide")
+	if !ok {
+		hide = true
+	}
+	if err := event.DeferCreateMessage(hide); err != nil {
 		return err
 	}
 
@@ -42,13 +46,11 @@ func (h *Handler) HandleMashup(event *handler.CommandEvent) error {
 	if err := utils.MashupFlags(src, dst, h.CodeData, buf); err != nil {
 		_, err := event.CreateFollowupMessage(messageBuilder.
 			SetContentf("Could not mashup flags: %s", err.Error()).
-			SetEphemeral(true).
 			Build())
 		return err
 	}
 	_, err := event.CreateFollowupMessage(messageBuilder.
 		AddFile("mashup.png", fmt.Sprintf("A flag mashup of %s and %s.", codes[src], codes[dst]), buf).
-		SetEphemeral(true).
 		Build())
 	return err
 }
