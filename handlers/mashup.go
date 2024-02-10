@@ -40,10 +40,11 @@ func (h *Handler) HandleMashup(event *handler.CommandEvent) error {
 
 	buf := new(bytes.Buffer)
 	if err := utils.MashupFlags(src, dst, h.CodeData, buf); err != nil {
-		return event.CreateMessage(messageBuilder.
+		_, err := event.CreateFollowupMessage(messageBuilder.
 			SetContentf("Could not mashup flags: %s", err.Error()).
 			SetEphemeral(true).
 			Build())
+		return err
 	}
 	_, err := event.CreateFollowupMessage(messageBuilder.
 		AddFile("mashup.png", fmt.Sprintf("A flag mashup of %s and %s.", codes[src], codes[dst]), buf).

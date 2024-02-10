@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	codesCDN = "https://flagcdn.com/en/codes.json"
+	codesCDN = "https://raw.githubusercontent.com/mlnrDev/FlagMashupBot/main/codes/codes.json"
 	flagCDN  = "https://flagcdn.com/w2560/%s.png"
 )
 
@@ -42,6 +42,9 @@ func (d *CodeData) FetchFlag(code string) (io.ReadCloser, error) {
 	rs, err := http.Get(fmt.Sprintf(flagCDN, code))
 	if err != nil {
 		return nil, err
+	}
+	if rs.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("received code %d from flag request", rs.StatusCode)
 	}
 	return rs.Body, nil
 }
