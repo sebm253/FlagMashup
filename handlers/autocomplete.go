@@ -40,7 +40,7 @@ func (h *Handler) HandleAutocomplete(event *handler.AutocompleteEvent) error {
 }
 
 func sortChoices(choices []discord.AutocompleteChoice) {
-	slices.SortFunc(choices, func(a, b discord.AutocompleteChoice) int {
-		return strings.Compare(a.(discord.AutocompleteChoiceString).Name, b.(discord.AutocompleteChoiceString).Name)
+	slices.SortFunc(choices, func(c1, c2 discord.AutocompleteChoice) int {
+		return strings.Compare(c1.ChoiceName(), c2.ChoiceName())
 	})
 }
