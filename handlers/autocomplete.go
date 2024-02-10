@@ -6,16 +6,12 @@ import (
 	"github.com/disgoorg/disgo/discord"
 	"github.com/disgoorg/disgo/handler"
 	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 )
 
 func (h *Handler) HandleAutocomplete(event *handler.AutocompleteEvent) error {
 	data := event.Data
-	focused, found := data.Find(func(option discord.AutocompleteOption) bool {
-		return option.Focused
-	})
-	if !found {
-		return nil
-	}
+	focused := data.Focused()
 	var choices []discord.AutocompleteChoice
 
 	input := data.String(focused.Name)
@@ -28,15 +24,23 @@ func (h *Handler) HandleAutocomplete(event *handler.AutocompleteEvent) error {
 				Value: keys[i],
 			})
 		}
-		return event.AutocompleteResult(choices)
-	}
-	for code, name := range codes {
-		if strings.Contains(strings.ToLower(name), strings.ToLower(input)) {
-			choices = append(choices, discord.AutocompleteChoiceString{
-				Name:  name,
-				Value: code,
-			})
+	} else {
+		for code, name := range codes {
+			if strings.Contains(strings.ToLower(name), strings.ToLower(input)) {
+				choices = append(choices, discord.AutocompleteChoiceString{
+					Name:  name,
+					Value: code,
+				})
+			}
 		}
+		choices = choices[:min(len(choices), 25)] // me when the
 	}
-	return event.AutocompleteResult(choices[:min(len(choices), 25)]) // me when the
+	sortChoices(choices)
+	return event.AutocompleteResult(choices)
+}
+
+func sortChoices(choices []discord.AutocompleteChoice) {
+	slices.SortFunc(choices, func(a, b discord.AutocompleteChoice) int {
+		return strings.Compare(a.(discord.AutocompleteChoiceString).Name, b.(discord.AutocompleteChoiceString).Name)
+	})
 }
