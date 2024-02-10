@@ -11,7 +11,7 @@ import (
 
 const (
 	codesCDN = "https://flagcdn.com/en/codes.json"
-	flagCDN  = "https://flagcdn.com/w2560/%s.jpg"
+	flagCDN  = "https://flagcdn.com/w2560/%s.png"
 )
 
 type CodeData struct {

@@ -20,5 +20,5 @@ func MashupFlags(src, dst string, codeData *data.CodeData, buf *bytes.Buffer) er
 	}
 	defer dstBody.Close()
 
-	return mashup.Mashup(mashup.NewJPEGInput(srcBody), mashup.NewJPEGInput(dstBody), mashup.NewJPEGOutput(buf, 100), 3)
+	return mashup.Mashup(mashup.NewPNGInput(srcBody), mashup.NewPNGInput(dstBody), mashup.NewPNGOutput(buf), 3)
 }

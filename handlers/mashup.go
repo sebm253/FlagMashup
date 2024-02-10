@@ -46,7 +46,7 @@ func (h *Handler) HandleMashup(event *handler.CommandEvent) error {
 			Build())
 	}
 	_, err := event.CreateFollowupMessage(messageBuilder.
-		AddFile("mashup.jpg", fmt.Sprintf("A flag mashup of %s and %s.", codes[src], codes[dst]), buf).
+		AddFile("mashup.png", fmt.Sprintf("A flag mashup of %s and %s.", codes[src], codes[dst]), buf).
 		SetEphemeral(true).
 		Build())
 	return err
