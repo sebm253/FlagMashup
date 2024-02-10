@@ -28,7 +28,8 @@ func main() {
 	slog.Info("starting the bot...", slog.String("disgo.version", disgo.Version))
 
 	client, err := disgo.New(os.Getenv("FLAG_MASHUP_TOKEN"),
-		bot.WithGatewayConfigOpts(gateway.WithIntents(gateway.IntentsNone)),
+		bot.WithGatewayConfigOpts(gateway.WithIntents(gateway.IntentsNone),
+			gateway.WithPresenceOpts(gateway.WithCompetingActivity("vexillology"))),
 		bot.WithCacheConfigOpts(cache.WithCaches(cache.FlagsNone)),
 		bot.WithEventListeners(handlers.NewHandler(codeData)))
 	if err != nil {
