@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	codesCDN = "https://raw.githubusercontent.com/mlnrDev/FlagMashupBot/main/codes/codes.json"
-	flagCDN  = "https://flagcdn.com/w2560/%s.png"
+	codesCDN = "https://raw.githubusercontent.com/mlnrDev/FlagMashupBot/main/flags/codes.json"
+	flagCDN  = "https://raw.githubusercontent.com/mlnrDev/FlagMashupBot/main/flags/%s.png"
 )
 
 type CodeData struct {
@@ -22,6 +22,9 @@ func (d *CodeData) Populate() {
 	rs, err := http.Get(codesCDN)
 	if err != nil {
 		panic(err)
+	}
+	if rs.StatusCode != http.StatusOK {
+		panic(fmt.Errorf("received code %d from codes request", rs.StatusCode))
 	}
 	defer rs.Body.Close()
 	if err := json.NewDecoder(rs.Body).Decode(&d.codes); err != nil {
