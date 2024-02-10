@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"bytes"
 	"flag-mashup/utils"
 	"fmt"
 
@@ -26,20 +27,26 @@ func (h *Handler) HandleMashup(event *handler.CommandEvent) error {
 			SetEphemeral(true).
 			Build())
 	}
+	if src == dst {
+		return event.CreateMessage(messageBuilder.
+			SetContentf("What's there to mashup?").
+			SetEphemeral(true).
+			Build())
+	}
 
 	if err := event.DeferCreateMessage(true); err != nil {
 		return err
 	}
 
-	mashup, err := utils.MashupFlags(src, dst, h.CodeData)
-	if err != nil {
+	buf := new(bytes.Buffer)
+	if err := utils.MashupFlags(src, dst, h.CodeData, buf); err != nil {
 		return event.CreateMessage(messageBuilder.
 			SetContentf("Could not mashup flags: %s", err.Error()).
 			SetEphemeral(true).
 			Build())
 	}
-	_, err = event.CreateFollowupMessage(messageBuilder.
-		AddFile("mashup.jpg", fmt.Sprintf("A flag mashup of %s and %s", codes[src], codes[dst]), mashup).
+	_, err := event.CreateFollowupMessage(messageBuilder.
+		AddFile("mashup.jpg", fmt.Sprintf("A flag mashup of %s and %s.", codes[src], codes[dst]), buf).
 		SetEphemeral(true).
 		Build())
 	return err
