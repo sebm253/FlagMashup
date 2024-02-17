@@ -5,7 +5,7 @@ go 1.22
 require (
 	github.com/disgoorg/disgo v0.17.2
 	github.com/lmittmann/tint v1.0.4
-	github.com/mlnrDev/mashup v0.0.0-20240217123909-5e118fc0db27
+	github.com/mlnrDev/mashup v0.0.0-20240217124517-3fc5ab2762ea
 	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a
 )
 
