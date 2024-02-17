@@ -9,6 +9,10 @@ import (
 	"github.com/disgoorg/disgo/handler"
 )
 
+const (
+	defaultMaxColors = 3
+)
+
 func (h *Handler) HandleMashup(event *handler.CommandEvent) error {
 	data := event.SlashCommandInteractionData()
 	codes := h.CodeData.Map()
@@ -42,8 +46,13 @@ func (h *Handler) HandleMashup(event *handler.CommandEvent) error {
 		return err
 	}
 
+	maxColors, ok := data.OptInt("maximum")
+	if !ok {
+		maxColors = defaultMaxColors
+	}
+
 	buf := new(bytes.Buffer)
-	if err := utils.MashupFlags(src, dst, h.CodeData, buf); err != nil {
+	if err := utils.MashupFlags(src, dst, maxColors, h.CodeData, buf); err != nil {
 		_, err := event.CreateFollowupMessage(messageBuilder.
 			SetContentf("Could not mashup flags: %s", err.Error()).
 			Build())

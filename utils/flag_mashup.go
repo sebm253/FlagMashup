@@ -7,7 +7,7 @@ import (
 	"github.com/mlnrDev/mashup"
 )
 
-func MashupFlags(src, dst string, codeData *data.CodeData, buf *bytes.Buffer) error {
+func MashupFlags(src, dst string, maxColors int, codeData *data.CodeData, buf *bytes.Buffer) error {
 	srcBody, err := codeData.FetchFlag(src)
 	if err != nil {
 		return err
@@ -20,5 +20,5 @@ func MashupFlags(src, dst string, codeData *data.CodeData, buf *bytes.Buffer) er
 	}
 	defer dstBody.Close()
 
-	return mashup.Mashup(mashup.NewPNGInput(srcBody), mashup.NewPNGInput(dstBody), mashup.NewPNGOutput(buf), 3)
+	return mashup.Mashup(mashup.NewPNGInput(srcBody), mashup.NewPNGInput(dstBody), mashup.NewPNGOutput(buf), maxColors)
 }
