@@ -18,7 +18,7 @@ func (h *Handler) HandleAutocomplete(event *handler.AutocompleteEvent) error {
 	codes := h.CodeData.Map()
 	if len(input) == 0 {
 		keys := maps.Keys(codes)
-		for i := 0; i < 25; i++ {
+		for i := range 25 {
 			choices = append(choices, discord.AutocompleteChoiceString{
 				Name:  codes[keys[i]],
 				Value: keys[i],
