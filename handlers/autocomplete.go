@@ -9,6 +9,10 @@ import (
 	"golang.org/x/exp/slices"
 )
 
+const (
+	maxChoiceAmount = 25
+)
+
 func (h *Handler) HandleAutocomplete(event *handler.AutocompleteEvent) error {
 	data := event.Data
 	focused := data.Focused()
@@ -18,7 +22,7 @@ func (h *Handler) HandleAutocomplete(event *handler.AutocompleteEvent) error {
 	codes := h.CodeData.Map()
 	if len(input) == 0 {
 		keys := maps.Keys(codes)
-		for i := range 25 {
+		for i := range maxChoiceAmount {
 			choices = append(choices, discord.AutocompleteChoiceString{
 				Name:  codes[keys[i]],
 				Value: keys[i],
@@ -33,7 +37,7 @@ func (h *Handler) HandleAutocomplete(event *handler.AutocompleteEvent) error {
 				})
 			}
 		}
-		choices = choices[:min(len(choices), 25)] // me when the
+		choices = choices[:min(len(choices), maxChoiceAmount)] // me when the
 	}
 	sortChoices(choices)
 	return event.AutocompleteResult(choices)
