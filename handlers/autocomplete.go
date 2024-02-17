@@ -14,7 +14,7 @@ func (h *Handler) HandleAutocomplete(event *handler.AutocompleteEvent) error {
 	focused := data.Focused()
 	var choices []discord.AutocompleteChoice
 
-	input := data.String(focused.Name)
+	input := strings.TrimSpace(data.String(focused.Name))
 	codes := h.CodeData.Map()
 	if len(input) == 0 {
 		keys := maps.Keys(codes)
