@@ -38,7 +38,7 @@ func (d *CodeData) Populate() {
 		}
 		d.codes[code] = d.codes[split[0]] + " - " + name // country - subdivision
 	}
-	slog.Debug("populated code data", slog.Int("data.length", len(d.codes)))
+	slog.Info("populated code data", slog.Int("data.length", len(d.codes)))
 }
 
 func (d *CodeData) FetchFlag(code string) (io.ReadCloser, error) {
