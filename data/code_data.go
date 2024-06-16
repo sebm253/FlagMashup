@@ -36,7 +36,7 @@ func (d *CodeData) Populate() {
 		if len(split) == 1 {              // no "-" separator
 			continue
 		}
-		d.codes[code] = fmt.Sprintf("%s - %s", d.codes[split[0]], name) // country - subdivision
+		d.codes[code] = d.codes[split[0]] + " - " + name // country - subdivision
 	}
 	slog.Debug("populated code data", slog.Int("data.length", len(d.codes)))
 }
