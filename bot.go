@@ -17,13 +17,13 @@ import (
 )
 
 func main() {
-	codeData := &data.CodeData{}
-	codeData.Populate()
-
 	logger := tint.NewHandler(os.Stdout, &tint.Options{
 		Level: slog.LevelInfo,
 	})
 	slog.SetDefault(slog.New(logger))
+
+	codeData := &data.CodeData{}
+	codeData.Populate()
 
 	slog.Info("starting the bot...", slog.String("disgo.version", disgo.Version))
 
