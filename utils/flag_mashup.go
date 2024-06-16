@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"flag-mashup/data"
 
-	"github.com/mlnrDev/mashup"
+	"github.com/sebm253/mashup"
 )
 
 func MashupFlags(src, dst string, maxColors int, codeData *data.CodeData, buf *bytes.Buffer) error {

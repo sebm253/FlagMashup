@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	codesCDN = "https://raw.githubusercontent.com/mlnrDev/FlagMashupBot/main/flags/codes.json"
-	flagCDN  = "https://raw.githubusercontent.com/mlnrDev/FlagMashupBot/main/flags/%s.png"
+	codesCDN = "https://raw.githubusercontent.com/sebm253/FlagMashup/main/flags/codes.json"
+	flagCDN  = "https://raw.githubusercontent.com/sebm253/FlagMashup/main/flags/%s.png"
 )
 
 type CodeData struct {
