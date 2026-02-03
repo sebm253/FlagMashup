@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	github.com/disgoorg/disgo v0.18.16
-	github.com/lmittmann/tint v1.1.2
+	github.com/lmittmann/tint v1.1.3
 	github.com/sebm253/mashup v0.0.0-20240616114036-3ad02217c3a4
 	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a
 )
